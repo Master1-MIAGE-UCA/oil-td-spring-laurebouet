@@ -1,10 +1,12 @@
 package bouet.OIL.Spring.example.dice.controller;
 
+import bouet.OIL.Spring.example.dice.Dice;
 import bouet.OIL.Spring.example.dice.DiceRollLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import bouet.OIL.Spring.example.dice.repo.DiceRepo;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
 
@@ -13,25 +15,22 @@ import java.util.List;
 public class DiceRollController {
 
     @Autowired
-    private DiceRepo diceRollLog;
+    private Dice dice;
 
-    private final Random random = new Random();
-    @Autowired
-    private DiceRepo diceRepo;
-
-    @PostMapping("/roll")
-    public DiceRepo rollDice(@RequestParam(defaultValue = "1") int count) {
-        if (count <= 0) {
-            throw new IllegalArgumentException("Le nombre de dés doit être supérieur à 0.");
-        }
-        List<Integer> results = random.ints(count, 1, 7)  // Valeurs entre 1 et 6
-                .boxed()
-                .toList();
-        DiceRepo diceRollLog = new DiceRepo(count, results);
-        return diceRepo.save(diceRollLog);
+    @GetMapping("/rollDice")
+    public int rollSingleDice() {
+        return dice.roll();
     }
-    @GetMapping("/logs")
-    public List<DiceRollLog> getAllDiceRepos() {
-        return diceRepo.findAll();
+
+    @GetMapping("/rollDices/{count}")
+    public List<Integer> rollMultipleDices(@PathVariable int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException("nb de face > à 0.");
+        }
+        List<Integer> results = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            results.add(dice.roll());
+        }
+        return results;
     }
 }

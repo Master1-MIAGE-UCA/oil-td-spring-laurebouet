@@ -9,17 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@RestController
 @SpringBootApplication
 public class DiceApplication {
-//	private Dice dice = new Dice();
 
-	@GetMapping("/")
-	public String home(){
-		return "hello world";
-	}
-//	@GetMapping("/rollDice")
-//	public int rollDice() {
-//
-//		return diceService.rollDice();
-//	}
 	public static void main(String[] args) {
 		SpringApplication.run(DiceApplication.class, args);
 	}

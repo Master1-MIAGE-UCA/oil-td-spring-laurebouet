@@ -9,30 +9,30 @@ import java.util.Random;
 @Component
 public class Dice{
 
-    private final int facesDice;
-    private final Random random;
+    private int faces;
+    private Random random;
 
     public Dice() {
-        this(6);
-    }
-    public Dice(int facesDice) {
-        if (Dice.this.facesDice <= 0) {
-            throw new IllegalArgumentException("Le nombre de faces doit être supérieur à 0.");
+        this(6);  }
+
+    public Dice(int faces) {
+        if (faces <= 0) {
+            throw new IllegalArgumentException("nb de face > 0.");
         }
-        this.facesDice = Dice.this.facesDice;
+        this.faces = faces;
         this.random = new Random();
     }
-    public int roll() {
-        return random.nextInt(Dice.this.facesDice) + 1;
-    }
-    public int getNumberOfFaces() {
-        return Dice.this.facesDice;
-    }
-    public static void main(String[] args) {
-        Dice dice = new Dice();
-        System.out.println("Lancé de dé à 6 faces : " + dice.roll());
 
-        Dice customDice = new Dice(20);
-        System.out.println("Lancé de dé à 20 faces : " + customDice.roll());
+    public int roll() {
+        return random.nextInt(faces) + 1;
+    }
+    public int getFaces() {
+        return faces;
+    }
+    public void setFaces(int faces) {
+        if (faces <= 0) {
+            throw new IllegalArgumentException("nb de face > 0.");
+        }
+        this.faces = faces;
     }
 }
